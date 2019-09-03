@@ -1,7 +1,7 @@
 import datetime
 import pygame
 pygame.init()
-size = [700, 500]
+size = [800, 600]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 

@@ -27,10 +27,11 @@ class Container:
                 s.update(self._entities)
 
     def draw(self,screen):
-        print(self._entities[0].components,"ololo")
-        print(self._entities[0].has("Sprite"))
-
+        for s in self._entities:
+            if s.has("Playable"):
+                coords = s.has("Coordinates").get()
+                viewport = ((coords[0]-15*16), (coords[1]-15*16))
         for s in self._entities:
             if s.has("Sprite") and s.has("Coordinates"):
                 sprite = s.get("Sprite").get()
-                screen.blit(sprites[sprite], s.get("Coordinates").get())
+                screen.blit(sprites[sprite], (s.get("Coordinates").get()[0]-viewport[0], s.get("Coordinates").get()[1]-viewport[1]))

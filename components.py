@@ -77,6 +77,8 @@ class Playable:
 class GlobalMap:
     def __init__(self,map_file):
         self.img = Image.open(map_file)
+        self.height = self.img.size[1]
+        self.wight = self.img.size[0]
 
     def loadmap(self,world):
         self.map = list()
