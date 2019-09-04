@@ -29,7 +29,7 @@ def update(world):
     world.update()
     # print(len(world._entities), len(world._systems))
 
-    clock.tick(10) # FPS
+    clock.tick(100) # FPS
 
     world.draw(screen)
     pygame.display.flip()

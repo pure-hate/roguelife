@@ -33,5 +33,8 @@ class Container:
                 viewport = ((coords[0]-15*16), (coords[1]-15*16))
         for s in self._entities:
             if s.has("Sprite") and s.has("Coordinates"):
-                sprite = s.get("Sprite").get()
-                screen.blit(sprites[sprite], (s.get("Coordinates").get()[0]-viewport[0], s.get("Coordinates").get()[1]-viewport[1]))
+                coords = s.get("Coordinates").get()
+                if coords[0]>viewport[0] and coords[1]>viewport[1]:
+                    if coords[0] < viewport[0]+800 and coords[1] < viewport[1]+600:
+                        sprite = s.get("Sprite").get()
+                        screen.blit(sprites[sprite], (coords[0]-viewport[0], coords[1]-viewport[1]))
