@@ -5,12 +5,6 @@ from update_module import *
 
 world = Container()
 
-globalmap = Entity(
-    world,
-    GlobalMap("map.png"))
-world.add_entity(globalmap)
-globalmap.get("GlobalMap").loadmap(world)
-
 player = Entity(
     world,
     Playable(),
@@ -20,6 +14,15 @@ player = Entity(
     Sprite("Player"),
     Health())
 world.add_entity(player)
+world.player=player
+
+globalmap = Entity(
+    world,
+    GlobalMap("map2.png"))
+world.add_entity(globalmap)
+globalmap.get("GlobalMap").loadmap(world)
+
+
 
 for i in range(1000):  # тестируем на тысяче персонажей
     player = Entity(

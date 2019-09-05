@@ -1,4 +1,5 @@
 import pygame
+import datetime
 
 sprites = {"Player": pygame.image.load("player.png"),
            "Grass": pygame.image.load("grass.png"),
@@ -12,6 +13,7 @@ class Container:
 
     def __init__(self):
         Container.instance = self
+        self.player = None
         self._systems = []
         self._entities = []
 
@@ -26,15 +28,19 @@ class Container:
             if hasattr(s, "update"):
                 s.update(self._entities)
 
-    def draw(self,screen):
+    def draw(self, screen):
+
+        coords = self.player.get("Coordinates").get()
+        viewport = ((coords[0] - 15 * 16), (coords[1] - 15 * 16))
+        print(self._entities[0])
         for s in self._entities:
-            if s.has("Playable"):
-                coords = s.has("Coordinates").get()
-                viewport = ((coords[0]-15*16), (coords[1]-15*16))
-        for s in self._entities:
-            if s.has("Sprite") and s.has("Coordinates"):
+            if s.has("Sprite"):
                 coords = s.get("Coordinates").get()
                 if coords[0]>viewport[0] and coords[1]>viewport[1]:
                     if coords[0] < viewport[0]+800 and coords[1] < viewport[1]+600:
                         sprite = s.get("Sprite").get()
                         screen.blit(sprites[sprite], (coords[0]-viewport[0], coords[1]-viewport[1]))
+
+        coords = self.player.get("Coordinates").get()
+        sprite = self.player.get("Sprite").get()
+        screen.blit(sprites[sprite], (coords[0] - viewport[0], coords[1] - viewport[1]))

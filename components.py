@@ -1,5 +1,6 @@
 from PIL import Image
 from entity_module import Entity
+import pygame
 
 class Hungry:
     def __init__(self):
@@ -75,7 +76,7 @@ class Playable:
     pass
 
 class GlobalMap:
-    def __init__(self,map_file):
+    def __init__(self, map_file):
         self.img = Image.open(map_file)
         self.height = self.img.size[1]
         self.wight = self.img.size[0]
@@ -90,7 +91,6 @@ class GlobalMap:
                         Coordinates(x*32, y*32),
                         Sprite("Grass"),)
                     world.add_entity(tile)
-                    #self.map.append(Block(x, y, False, "Grass"))
                 elif self.img.getpixel((x, y)) == (0, 0, 0, 255):
                     tile = Entity(
                         world,
@@ -98,4 +98,4 @@ class GlobalMap:
                         Sprite("Block"),
                         Solid())
                     world.add_entity(tile)
-                    #self.map.append(Block(x, y, True, "Block"))
+

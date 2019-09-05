@@ -5,13 +5,14 @@ size = [800, 600]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
+
 def update(world):
-
-    for s in world._entities:
-            if s.has("Playable") and s.has("Coordinates"):
-                player = s
-
     start = datetime.datetime.now()
+    for s in world._entities:
+        if s.has("Playable") and s.has("Coordinates"):
+            player = s
+            break
+
     screen.fill((0, 0, 0))
 
     for event in pygame.event.get():
@@ -35,3 +36,5 @@ def update(world):
     pygame.display.flip()
 
     print(datetime.datetime.now() - start)
+
+
