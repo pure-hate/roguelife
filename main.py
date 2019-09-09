@@ -8,13 +8,14 @@ world = Container()
 player = Entity(
     world,
     Playable(),
-    Coordinates(32, 32),
+    Coordinates(64, 64),
     Hungry(),
     Name("Vasya"),
     Sprite("Player"),
-    Health())
+    Health(),
+    Timer())
 world.add_entity(player)
-world.player=player
+world.player = player
 
 globalmap = Entity(
     world,

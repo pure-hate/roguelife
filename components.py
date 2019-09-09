@@ -2,6 +2,41 @@ from PIL import Image
 from entity_module import Entity
 import pygame
 
+
+class Timer:
+    def __init__(self):
+        self.hour=12
+        self.minutes=0
+        self.year = 2000
+        self.month = 1
+        self.day = 1
+
+    def set_time(self, time):
+        self.hour, self.minutes, self.year, self.month, self.day = time
+
+    def get_time(self):
+        return self.hour,self.minutes,self.year,self.month,self.day
+
+    def get_min_and_hour(self):
+        return self.hour,self.minutes
+
+    def update(self, entities):
+        self.minutes+=1
+        if self.minutes > 59:
+            self.minutes=0
+            self.hour+=1
+        if self.hour > 23:
+            self.hour=0
+            self.day+=1
+        if self.day > 29:
+            self.day = 1
+            self.month +=1
+        if self.month > 11:
+            self.year += 1
+            self.month = 1
+        #print(self.get_time())
+
+
 class Hungry:
     def __init__(self):
         self.ccal = 1000
@@ -54,6 +89,17 @@ class Coordinates:
 class Name:
     def __init__(self, name):
         self.name = name
+
+
+class State:
+    def __init__(self, state="Idle"):
+        self.state = state
+
+    def set(self,state):
+        self.state = state
+
+    def get(self):
+        return self.state
 
 
 class Sprite:

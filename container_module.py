@@ -23,6 +23,23 @@ class Container:
     def add_entity(self, entity):
         self._entities.append(entity)
 
+    def get_system(self, clazz):
+        return self._systems[clazz]
+
+    def has_system(self, clazz):
+        if clazz in self._systems:
+            return self.get_system(clazz)
+        else:
+            return None
+
+    def get_solid(self, coords):
+        for s in self._entities:
+            if s.has("Coordinates") and s.has("Solid"):
+                if s.get("Coordinates").get() == coords:
+                    return True
+
+
+    #if s.has("Coordinates").get() == coords and s.has("Solid"):
     def update(self):
         for s in self._systems:
             if hasattr(s, "update"):
@@ -32,7 +49,7 @@ class Container:
 
         coords = self.player.get("Coordinates").get()
         viewport = ((coords[0] - 15 * 16), (coords[1] - 15 * 16))
-        print(self._entities[0])
+        #print(self._entities[0])
         for s in self._entities:
             if s.has("Sprite"):
                 coords = s.get("Coordinates").get()
