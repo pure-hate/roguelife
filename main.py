@@ -2,6 +2,7 @@ from entity_module import *
 from container_module import *
 from components import *
 from update_module import *
+from items import *
 
 world = Container()
 
@@ -13,7 +14,8 @@ player = Entity(
     Name("Vasya"),
     Sprite("Player"),
     Health(),
-    Timer())
+    Timer(),)
+player.set(Inventory(world, player, Bread(player, world), Bread(player, world), Bread(player, world)))
 world.add_entity(player)
 world.player = player
 
@@ -33,16 +35,22 @@ for i in range(1000):  # тестируем на тысяче персонаже
         Name("Vasya"),
         Sprite("Player"),
         Health())
+
     world.add_entity(player)
-# player = Entity(
-#     world,
-#     Coordinates(10,10),
-#     Hungry(),
-#     Name("Vasya"),
-#     Sprite("Player"),
-#     Health())
-#
-# world.add_entity(player)
+
+for i in range(1):  # тестируем на тысяче персонажей
+    player = Entity(
+        world,
+        Coordinates(128, 128),
+        Hungry(),
+        Name("Vasya"),
+        Sprite("Player"),
+        Health())
+    player.set(Inventory(world, player, Bread(player, world), Bread(player, world), Bread(player, world)))
+    player.set(Trader(player))
+    player.set(Menu(player))
+    world.add_entity(player)
+
 
 
 while True:

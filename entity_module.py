@@ -11,6 +11,8 @@ class Entity:
 
     def set(self, component):
         key = component.__class__.__name__
+        component.world = self.current_world
+        component.parent = self
         self.components[key] = component
         self.current_world.add_system(component)
 

@@ -1,5 +1,6 @@
 import datetime
 import pygame
+import pickle
 pygame.init()
 size = [800, 600]
 screen = pygame.display.set_mode(size)
@@ -32,8 +33,29 @@ def update(world):
                     player.get("Coordinates").add(0,-32)
             if event.key == pygame.K_DOWN:
                 coords = player.get("Coordinates").get()
+                obj = world.get_entity((coords[0], coords[1] + 32))
+                print(coords)
+                for s in obj:
+                    if s and s.has("Menu"):
+                        s.get("Menu").show()
                 if not world.get_solid((coords[0], coords[1]+32)):
                     player.get("Coordinates").add(0,32)
+
+
+
+            if event.key == pygame.K_KP_ENTER:
+                print(player.get("Inventory").get())
+                player.get("Inventory").use()
+
+            if event.key == pygame.K_F5:
+                world.save()
+
+            if event.key == pygame.K_F6:
+                world.load()
+                for s in world._entities:
+                    if s.has("Playable") and s.has("Coordinates"):
+                        player = s
+                        break
 
     world.update()
     # print(len(world._entities), len(world._systems))
@@ -43,6 +65,6 @@ def update(world):
     world.draw(screen)
     pygame.display.flip()
 
-    print(datetime.datetime.now() - start)
+    #print(datetime.datetime.now() - start)
 
 

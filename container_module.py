@@ -1,5 +1,5 @@
 import pygame
-import datetime
+import pickle
 
 sprites = {"Player": pygame.image.load("player.png"),
            "Grass": pygame.image.load("grass.png"),
@@ -38,6 +38,35 @@ class Container:
                 if s.get("Coordinates").get() == coords:
                     return True
 
+    def get_entity(self, coords):
+        ret = []
+        for s in self._entities:
+                if s.has("Coordinates"):
+                    if s.has("Coordinates").get() == coords:
+                        ret.append(s)
+                        print(ret)
+        return ret
+
+    def save(self):
+        f = open(r'save.sav', 'wb')
+        pickle.dump(self._entities, f)
+        f.close()
+        f = open(r'save2.sav', 'wb')
+        pickle.dump(self._systems, f)
+        f.close()
+
+        print("Saved!")
+
+    def load(self):
+        f = open(r'save.sav', 'rb')
+        self._entities = pickle.load(f)
+        self.player = self._entities[0]
+        f.close()
+        f = open(r'save2.sav', 'rb')
+        self._systems = pickle.load(f)
+        f.close()
+
+        print("Loaded!")
 
     #if s.has("Coordinates").get() == coords and s.has("Solid"):
     def update(self):
