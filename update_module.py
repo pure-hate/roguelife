@@ -1,6 +1,5 @@
 import datetime
 import pygame
-import pickle
 pygame.init()
 size = [800, 600]
 screen = pygame.display.set_mode(size)
@@ -10,7 +9,7 @@ clock = pygame.time.Clock()
 def update(world):
     start = datetime.datetime.now()
     for s in world._entities:
-        if s.has("Playable") and s.has("Coordinates"):
+        if s.has("Playable"):
             player = s
             break
 
@@ -53,14 +52,15 @@ def update(world):
             if event.key == pygame.K_F6:
                 world.load()
                 for s in world._entities:
-                    if s.has("Playable") and s.has("Coordinates"):
+                    if s.has("Playable"):
                         player = s
                         break
 
     world.update()
+    world.timer.update(world._entities)
     # print(len(world._entities), len(world._systems))
 
-    clock.tick(100) # FPS
+    clock.tick(10) # FPS
 
     world.draw(screen)
     pygame.display.flip()

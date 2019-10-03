@@ -1,8 +1,6 @@
 class Bread:
-    def __init__(self, parent, world):
+    def __init__(self):
         self.weight = 0.1
-        self.parent = parent
-        self.world = world
 
     def use(self):
         self.parent.has("Hungry").eat(100,10,5,50)

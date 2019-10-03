@@ -1,9 +1,19 @@
 import pygame
 import pickle
+import os, sys
 
-sprites = {"Player": pygame.image.load("player.png"),
-           "Grass": pygame.image.load("grass.png"),
-           "Block": pygame.image.load("block.png")}
+# for pyinstaller
+#current_path = os.path.dirname(sys.executable)
+#image_path = os.path.join(current_path, 'images')
+
+current_path = os.path.abspath(os.curdir)
+image_path = os.path.join(current_path, 'images')
+
+print(os.path.dirname(sys.executable))
+print(image_path)
+sprites = {"Player": pygame.image.load(os.path.join(image_path, 'player.png')),
+           "Grass": pygame.image.load(os.path.join(image_path, 'grass.png')),
+           "Block": pygame.image.load(os.path.join(image_path, 'block.png'))}
 
 
 class Container:
@@ -41,10 +51,10 @@ class Container:
     def get_entity(self, coords):
         ret = []
         for s in self._entities:
-                if s.has("Coordinates"):
-                    if s.has("Coordinates").get() == coords:
-                        ret.append(s)
-                        print(ret)
+            if s.has("Coordinates"):
+                if s.has("Coordinates").get() == coords:
+                    ret.append(s)
+                    print(ret)
         return ret
 
     def save(self):
@@ -68,7 +78,6 @@ class Container:
 
         print("Loaded!")
 
-    #if s.has("Coordinates").get() == coords and s.has("Solid"):
     def update(self):
         for s in self._systems:
             if hasattr(s, "update"):
@@ -82,7 +91,7 @@ class Container:
         for s in self._entities:
             if s.has("Sprite"):
                 coords = s.get("Coordinates").get()
-                if coords[0]>viewport[0] and coords[1]>viewport[1]:
+                if coords[0] > viewport[0] and coords[1] > viewport[1]:
                     if coords[0] < viewport[0]+800 and coords[1] < viewport[1]+600:
                         sprite = s.get("Sprite").get()
                         screen.blit(sprites[sprite], (coords[0]-viewport[0], coords[1]-viewport[1]))

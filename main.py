@@ -5,6 +5,7 @@ from update_module import *
 from items import *
 
 world = Container()
+world.timer = Timer()
 
 player = Entity(
     world,
@@ -13,17 +14,18 @@ player = Entity(
     Hungry(),
     Name("Vasya"),
     Sprite("Player"),
-    Health(),
-    Timer(),)
-player.set(Inventory(world, player, Bread(player, world), Bread(player, world), Bread(player, world)))
+    Health(),)
+player.set(Inventory())
+player.get("Inventory").add(Bread())
+player.get("Inventory").add(Bread())
 world.add_entity(player)
 world.player = player
 
-globalmap = Entity(
+world.map = Entity(
     world,
     GlobalMap("map2.png"))
-world.add_entity(globalmap)
-globalmap.get("GlobalMap").loadmap(world)
+
+world.map.get("GlobalMap").loadmap(world)
 
 
 
@@ -38,17 +40,20 @@ for i in range(1000):  # тестируем на тысяче персонаже
 
     world.add_entity(player)
 
-for i in range(1):  # тестируем на тысяче персонажей
+for i in range(1):  # торговец
     player = Entity(
         world,
         Coordinates(128, 128),
         Hungry(),
         Name("Vasya"),
         Sprite("Player"),
-        Health())
-    player.set(Inventory(world, player, Bread(player, world), Bread(player, world), Bread(player, world)))
-    player.set(Trader(player))
-    player.set(Menu(player))
+        Health(),
+        State())
+    player.set(Inventory())
+    player.get("Inventory").add(Bread())
+    player.set(Trader())
+    player.set(Menu())
+    player.set(Path())
     world.add_entity(player)
 
 
